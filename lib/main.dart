@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
             myFuture().then((value) {
               print(value);
               print('Future finished');
+            }, onError: (error) {
+              print(error);
             });
             print('Future now here');
           },
@@ -28,5 +30,5 @@ class MyApp extends StatelessWidget {
 
 Future<String> myFuture() async {
   await Future.delayed(Duration(seconds: 1));
-  return 'This future is complete';
+  return Future.error('This is an error');
 }
