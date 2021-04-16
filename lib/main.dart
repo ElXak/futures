@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            print('Future started');
             String futureValue = await myFuture();
             print(futureValue);
           },
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<String> myFuture() {
-  return Future.value('This future is complete');
+Future<String> myFuture() async {
+  await Future.delayed(Duration(seconds: 1));
+  return 'This future is complete';
 }
