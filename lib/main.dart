@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,20 +14,29 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            print('Future started');
-            String value = await myFuture().catchError((error) {
-              print(error);
-            });
-            print('Future now here');
+          onPressed: () {
+            runMultipleDownloads();
           },
         ),
       ),
     );
   }
-}
 
-Future<String> myFuture() async {
-  await Future.delayed(Duration(seconds: 1));
-  throw Exception('Exception from error');
+  Future<bool> downloadFile(int id, int duration) async {
+    await Future.delayed(Duration(seconds: duration));
+    print('Download complete for $id');
+    return true;
+  }
+
+  Future runMultipleDownloads() async {
+    List<Future> futures = [];
+
+    for (int i = 0; i < 10; i++) {
+      futures.add(downloadFile(i, Random(i).nextInt(10)));
+    }
+
+    print('Start downloads');
+    await Future.wait(futures);
+    print('All downloads completed');
+  }
 }
