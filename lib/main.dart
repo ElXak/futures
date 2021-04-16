@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,29 +12,22 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            runMultipleDownloads();
+          onPressed: () async {
+            String futureValue = await myTimedOutFuture()
+                .timeout(Duration(seconds: 2), onTimeout: () {
+              print('This future has timed out');
+              return 'This is my timeout value';
+            });
+            print('Future completed: $futureValue');
           },
         ),
       ),
     );
   }
 
-  Future<bool> downloadFile(int id, int duration) async {
-    await Future.delayed(Duration(seconds: duration));
-    print('Download complete for $id');
-    return true;
-  }
-
-  Future runMultipleDownloads() async {
-    List<Future> futures = [];
-
-    for (int i = 0; i < 10; i++) {
-      futures.add(downloadFile(i, Random(i).nextInt(10)));
-    }
-
-    print('Start downloads');
-    await Future.wait(futures);
-    print('All downloads completed');
+  Future<String> myTimedOutFuture() async {
+    print('Future started');
+    await Future.delayed(Duration(seconds: 5));
+    return 'Future completed';
   }
 }
