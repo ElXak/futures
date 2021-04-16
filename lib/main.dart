@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             myFuture().then((value) {
               print(value);
               print('Future finished');
-            }, onError: (error) {
+            }).catchError((error) {
               print(error);
             });
             print('Future now here');
