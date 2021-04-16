@@ -12,12 +12,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             print('Future started');
-            myFuture().then((value) {
-              print(value);
-              print('Future finished');
-            }).catchError((error) {
+            String value = await myFuture().catchError((error) {
               print(error);
             });
             print('Future now here');
