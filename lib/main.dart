@@ -30,5 +30,5 @@ class MyApp extends StatelessWidget {
 
 Future<String> myFuture() async {
   await Future.delayed(Duration(seconds: 1));
-  return Future.error('This is an error');
+  throw Exception('Exception from error');
 }
